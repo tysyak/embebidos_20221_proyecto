@@ -47,6 +47,10 @@ class Core:
 
     def start(self):
         Thread(target=self.mod_gas.sensor_listener).start()
+        self.servo_motor.min()
+        sleep(1)
+        self.servo_motor.max()
+        self.status_led_ok.blink(on_time=0.1,off_time=0.1,)
         self.telebot_msg_handler()
 
     def abrir_cerradura(self):
