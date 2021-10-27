@@ -7,7 +7,7 @@
 - [ ] Sensor Ultrasónico para posible intrusión
 - [ ] Bot Telegram para todas las acciones
   - [ ] Escucha para todos los módulos
-  - [ ] Deshabilitar Módulos por separado
+  - [ ] Deshabilitar Notificaciones de modulos por separado
   - [ ] Alta de ID de chat de usuarios
 - [ ] BD para usuarios
 - [ ] Inicio Automático en el SO de la Raspberry

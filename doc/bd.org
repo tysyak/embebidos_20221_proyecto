@@ -1,0 +1,34 @@
+#+TITLE: Base de datos
+
+* Instalación de la Base de datos
+Para instalar la base de datos ejecutamos los siguientes comandos
+#+begin_src bash
+sudo apt install postgtresql
+#+end_src
+
+Ingresamos como usuario postgres
+#+begin_src bash
+sudo su postgres
+#+end_src
+
+Creamos el usuario
+#+begin_src shell-session
+$ sudo su postgres
+postgres@raspberrypi:/home/pi/Documents/embebidos_20221_proyecto/src/cerradura_pwm$ createuser pi -P --interactive
+Ingrese la contraseña para el nuevo rol:
+Ingrésela nuevamente:
+¿Será el nuevo rol un superusuario? (s/n) s
+postgres@raspberrypi:/home/pi/Documents/embebidos_20221_proyecto/src/cerradura_pwm$
+#+end_src
+* Creación de la base de datos
+Ejecutamos el programa =psql= para ejecutar la siguiente sentencia para crear
+nuestra BD
+#+begin_src sql
+create database pi;
+#+end_src
+
+* Conexión
+Probamos una conexión:
+#+begin_src shell-session
+\connect pi
+#+end_src
