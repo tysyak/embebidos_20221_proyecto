@@ -3,6 +3,7 @@
 import time
 import telebot
 import os
+from threading import Thread, Event
 from signal import pause
 from gpiozero import Servo, LED, DistanceSensor, LightSensor
 from pyfingerprint.pyfingerprint import PyFingerprint
@@ -11,8 +12,11 @@ from threading import Thread
 from time import sleep
 from core.BD import BD
 
-class Core:
+class Core(Thread):
     def __init__(self):
+        Thread.__init__(self)
+        self.shutdown_flag = Event()
+
         self.status_led_ok = LED(3)
         self.status_led_error = LED(4)
         self.led_gen_status = LED(2)
@@ -22,7 +26,8 @@ class Core:
         self.__key_api_telegram = os.getenv("TELEGRAM_API")
         self.tele_bot = telebot.TeleBot(self.__key_api_telegram)
         self.bd = BD()
-        self.mod_gas = Gas(self.gas_sensor, self.led_gen_status, self.tele_bot, self.bd)
+        self.mod_gas = Gas(self.gas_sensor, self.led_gen_status, self.tele_bot,
+                           self.bd, self.shutdown_flag)
 
     def telebot_msg_handler(self):
         bot = self.tele_bot
@@ -41,17 +46,16 @@ class Core:
 
         @bot.message_handler(func=lambda message: True)
         def echo_message(message):
-            bot.reply_to(message, "Tu chat id es:" + message.chat.id) # Valor del comando por defecto
+            bot.reply_to(message, "Tu chat id es:" + message.chat.id)
             sleep(1)
             bot.reply_to(message, message.chat.id)
 
-
         bot.infinity_polling()
 
-    def start(self):
-        Thread(target=self.mod_gas.sensor_listener).start()
+    def run(self):
+        self.mod_gas.start()
         self.cerrar_cerradura()
-        self.status_led_ok.blink(on_time=0.5,off_time=3,)
+        self.status_led_ok.blink(on_time=0.5, off_time=5)
         self.telebot_msg_handler()
 
     def abrir_cerradura(self):

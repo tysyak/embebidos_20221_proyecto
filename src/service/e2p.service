@@ -1,0 +1,11 @@
+[Unit]
+Description=Proyecto embebidos 20221
+Documentation=Nope
+
+[Service]
+Type=forking
+ExecStart=$HOME/bin/e2m
+ExecStop=/bin/pkill e2m
+
+[Install]
+WantedBy=default.target
