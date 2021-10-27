@@ -38,6 +38,11 @@ class Core:
             bot.reply_to(message, msg)
             self.cerrar_cerradura()
 
+        @bot.message_handler(func=lambda message: True)
+        def echo_message(message):
+            bot.reply_to(message, message.chat.id) # Valor del comando por defecto
+
+
         bot.infinity_polling()
 
     def start(self):
