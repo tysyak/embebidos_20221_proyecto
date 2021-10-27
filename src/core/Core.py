@@ -8,6 +8,7 @@ from gpiozero import Servo, LED, DistanceSensor, LightSensor
 from pyfingerprint.pyfingerprint import PyFingerprint
 from gas.Gas import Gas
 from threading import Thread
+from time import sleep
 from core.BD import BD
 
 class Core:
@@ -28,29 +29,29 @@ class Core:
 
         @bot.message_handler(commands=['abrir'])
         def abrir(message):
-            msg = "abriendo"
+            self.abrir_cerradura()
+            msg = "Abierto"
             bot.reply_to(message, msg)
-            self.cerrar_cerradura()
 
         @bot.message_handler(commands=['cerrar'])
         def cerrar(message):
-            msg = "cerrando"
-            bot.reply_to(message, msg)
             self.cerrar_cerradura()
+            msg = "Cerrado"
+            bot.reply_to(message, msg)
 
         @bot.message_handler(func=lambda message: True)
         def echo_message(message):
-            bot.reply_to(message, message.chat.id) # Valor del comando por defecto
+            bot.reply_to(message, "Tu chat id es:" + message.chat.id) # Valor del comando por defecto
+            sleep(1)
+            bot.reply_to(message, message.chat.id)
 
 
         bot.infinity_polling()
 
     def start(self):
         Thread(target=self.mod_gas.sensor_listener).start()
-        self.servo_motor.min()
-        sleep(1)
-        self.servo_motor.max()
-        self.status_led_ok.blink(on_time=0.1,off_time=0.1,)
+        self.cerrar_cerradura()
+        self.status_led_ok.blink(on_time=0.5,off_time=3,)
         self.telebot_msg_handler()
 
     def abrir_cerradura(self):
