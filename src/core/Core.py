@@ -30,6 +30,13 @@ class Core:
         def abrir(message):
             msg = "abriendo"
             bot.reply_to(message, msg)
+            self.cerrar_cerradura()
+
+        @bot.message_handler(commands=['cerrar'])
+        def cerrar(message):
+            msg = "cerrando"
+            bot.reply_to(message, msg)
+            self.cerrar_cerradura()
 
         bot.infinity_polling()
 
