@@ -37,14 +37,8 @@ class Core:
         Thread(target=self.mod_gas.sensor_listener).start()
         self.telebot_msg_handler()
 
-
-
     def abrir_cerradura(self):
         self.servo_motor.max()
 
     def cerrar_cerradura(self):
         self.servo_motor.min()
-
-
-if __name__ == "__main__":
-    Core.start()
