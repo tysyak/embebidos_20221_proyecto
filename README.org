@@ -1,0 +1,13 @@
+#+TITLE: Proyecto Embebidos 2022-1
+
+* Módulos a Desarrollar
+- [ ] Cerradura con servomotor
+- [ ] Implementación de del detector de Humo
+- [ ] Detector de Huella Digital
+- [ ] Sensor Ultrasónico para posible intrusión
+- [ ] Bot Telegram para todas las acciones
+  - [ ] Escucha para todos los módulos
+  - [ ] Deshabilitar Módulos por separado
+  - [ ] Alta de ID de chat de usuarios
+- [ ] BD para usuarios
+- [ ] Inicio Automático en el SO de la Raspberry
