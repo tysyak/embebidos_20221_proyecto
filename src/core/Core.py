@@ -45,9 +45,9 @@ class Core(Thread):
         Thread.__init__(self)
         self.shutdown_flag = Event()
         self.bd = BlueDot()
-        self.status_led_ok = LED(3,active_high=False)
-        self.status_led_error = LED(4,active_high=False)
-        self.led_gen_status = LED(2,active_high=False)
+        self.status_led_ok = LED(3,active_high=False) # verde
+        self.status_led_error = LED(4,active_high=False) # rojo
+        self.led_gen_status = LED(2,active_high=False) # azul
         self.servo_motor = Servo(17)
         self.servo_motor.min()
         self.gas_sensor = LightSensor(21)
