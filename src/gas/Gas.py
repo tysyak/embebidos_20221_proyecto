@@ -19,8 +19,8 @@ class Gas(Thread):
         while not self.shutdown_flag.is_set():
             if (self.gas_sensor == 0.0):
                 records = self.__conn.ejecutar_consulta(
-                    "SELECT chat_id FROM alta_notificaciones where
-                    humo is true")
+                    """SELECT chat_id FROM alta_notificaciones where
+                    humo is true""")
                 self.led_status.blink(on_time=0.1,off_time=0.1,n=700)
                 if records:
                     for chat_id in records:

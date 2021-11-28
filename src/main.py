@@ -12,9 +12,16 @@ def main():
     signal.signal(signal.SIGTERM, service_shutdown)
     signal.signal(signal.SIGINT, service_shutdown)
     try:
-        core = Core()
-        core.start()
+        while True:
+            core = Core()
+            core.start()
+            print('inicio')
+
     except Exception:
         core.shutdown_flag.set()
         core.join()
         exit(0)
+
+
+if __name__=='__main__':
+    main()
