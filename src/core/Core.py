@@ -59,6 +59,8 @@ class Core(Thread):
         self.bluetooth = Bluetooth(self.bd, self.servo_motor)
         self.tele_bot = telebot.TeleBot(self.__key_api_telegram)
         self.bd = BD()
+        self.lector = Lector(self.status_led_error, self.status_led_ok,
+                             self.tele_bot, self.servo_motor, '/dev/ttyUSB0')
         self.mod_gas = Gas(self.gas_sensor, self.led_gen_status, self.tele_bot,
                            self.bd, self.shutdown_flag)
 
