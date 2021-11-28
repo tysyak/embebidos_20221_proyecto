@@ -11,6 +11,7 @@ from gpiozero import Servo, LED, DistanceSensor, LightSensor, Button
 from pyfingerprint.pyfingerprint import PyFingerprint
 from gas.Gas import Gas
 from bluetooth.Bluetooth import Bluetooth
+from lector_huella.Lector import Lector
 from threading import Thread
 from time import sleep
 from core.BD import BD
@@ -92,15 +93,17 @@ class Core(Thread):
         bot.infinity_polling()
 
     def run(self):
-        self.status_led_ok.blink(on_time=0.5, off_time=5)
+        self.led_gen_status.blink(on_time=1, off_time=5)
         self.mod_gas.start()
-        print("Iniciando Modulo de Bluetooth")
+        print("\033[32mIniciando Modulo de Bluetooth\033[0m")
         self.bluetooth.start()
         self.abrir_cerradura()
-        print("Iniciando Asistente")
+        print("\033[32mIniciando Asistente\033[0m")
         self.asistente.start()
         Thread(target=self.cerradura).start()
-        print("Iniciando Modulo de Telegram")
+        print("\033[32mIniciando Lector de huella\033[0m")
+        self.lector.start()
+        print("\033[32mIniciando Modulo de Telegram\033[0m")
         self.telebot_msg_handler()
 
 
