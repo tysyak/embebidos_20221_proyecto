@@ -14,7 +14,7 @@ from bluetooth.Bluetooth import Bluetooth
 from threading import Thread
 from time import sleep
 from core.BD import BD
-from core.Assistant import SampleAssistant
+from core.Assistant import Asistente
 from google.assistant.embedded.v1alpha2 import (
     embedded_assistant_pb2,
     embedded_assistant_pb2_grpc
