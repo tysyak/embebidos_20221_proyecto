@@ -16,13 +16,12 @@ class Bluetooth(Thread):
         elif pos.bottom:
             self.servo.min()
             print("Cerrando con BT")
-        elif pos.left:
-            pass # google-assistan
         else:
             pass
 
     def bluetooth_main(self):
         self.bd.when_pressed = self.dpad
+
         pause()
 
     def run(self):
