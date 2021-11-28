@@ -90,17 +90,33 @@ class Core(Thread):
         bot.infinity_polling()
 
     def run(self):
+        self.status_led_ok.blink(on_time=0.5, off_time=5)
         self.mod_gas.start()
         print("Iniciando Modulo de Bluetooth")
         self.bluetooth.start()
         self.abrir_cerradura()
-        # self.asistente()
+        print("Iniciando Asistente")
+        self.asistente.start()
+        Thread(target=self.cerradura).start()
         print("Iniciando Modulo de Telegram")
         self.telebot_msg_handler()
-        self.status_led_ok.blink(on_time=0.5, off_time=5)
+
 
     def abrir_cerradura(self):
         self.servo_motor.max()
 
     def cerrar_cerradura(self):
         self.servo_motor.min()
+
+    def cambiar_edo(self):
+        if self.servo_motor.value == -1.0:
+            self.abrir_cerradura()
+        else:
+            self.cerrar_cerradura()
+
+    def cerradura(self):
+        while True:
+            if self.interruptor_plastico.is_pressed:
+                print("Cambia")
+                self.cambiar_edo()
+                self.interruptor_plastico.wait_for_release()
