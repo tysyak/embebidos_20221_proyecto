@@ -6,6 +6,20 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 
 class Lector(Thread):
     def __init__(self,  led_status_r, led_status_g, tele_bot, servo, tty=None):
+        """!
+        Esta clase se encarga de realizar las acciones del lector de huella
+        digital como:
+        - Dar de alta la huella
+        - Borrar Huella
+        - Verificar existencia de la huella
+        - Abrir cerradura si la huella coincide con la base de datos
+
+        @param led_status_r Instancia de led de estado roja
+        @param led_status_g Instancia de led de estado verde
+        @param tele_bot Bot de telegram
+        @param servo Servomotor a controlar
+        @param tty Puerto serial USB de lector de huella, por defecto es /dev/ttyUSBX
+        """
         Thread.__init__(self)
         cmd = 'ls /dev/ | grep ttyUSB'
         if not tty:
@@ -20,6 +34,9 @@ class Lector(Thread):
         # self.message = message
 
     def guardar_huella(self):
+        """!
+        metodo para salvar huella en la memoria del lector
+        """
         count = 10
         self.led_status_g.on()
         while (count <= 0 and not self.finger.readImage()):
@@ -50,10 +67,13 @@ class Lector(Thread):
             return 'No son la misma huella, intentelo de nuevo...'
 
         self.finger.createTemplate()
-        positionNumber = f.storeTemplate()
+        positionNumber = self.finger..storeTemplate()
         return 'Se registro la huella exitosamente'
 
     def verificar_huella(self):
+        """!
+        Metodo que verifica la existencia de la huella
+        """
         count = 10
         self.led_status_g.on()
         while (count <= 0 and not self.finger.readImage()):
@@ -72,6 +92,10 @@ class Lector(Thread):
             return "Verificación confirmada"
 
     def controlar_puerta(self):
+        """!
+        Metodo que controla la puerta si se coincide la huella con alguna de la
+        BD del lector
+        """
         while True:
             print('Waiting for finger...')
 
@@ -97,4 +121,7 @@ class Lector(Thread):
             time.sleep(3)
 
     def run(self):
+        """!
+        Ejecuta el escucha del lector en un hilo de ejecucion
+        """
         self.controlar_puerta()

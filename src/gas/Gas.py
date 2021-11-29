@@ -7,6 +7,17 @@ from threading import Thread
 
 class Gas(Thread):
     def __init__(self, gas_sensor, led_status, tele_bot, database, shutdown_flag):
+        """!
+        Esta clase se encarga de enviar y de controlar el sensor de gas
+
+        @param gas_sensor El sensor de gas
+        @param led_status El led a usar
+        @param tele_bot El bot de telegram
+        @param database El manejador de la base de datos
+        @param shutdown_flag La bandera de sañales
+
+        @return Una instancia del sensor de gas
+        """
         Thread.__init__(self)
         self.shutdown_flag = shutdown_flag
 
@@ -17,6 +28,11 @@ class Gas(Thread):
         self.__contador = 10
 
     def sensor_listener(self):
+        """!
+        Rutina en bucle que esta a la escucha del sensor, la envia un mensaje a
+        los usuarios dados de alta en la BD mediante telegram. También enciende
+        y apaga un led si hay gas, humo u gasolina cerca.
+        """
         while True:
             sleep(5)
             print(self.gas_sensor.value)
@@ -39,4 +55,7 @@ class Gas(Thread):
                 pass
 
     def run(self):
+        """!
+        Ejecuta en un hilo el sensor de gas
+        """
         self.sensor_listener()

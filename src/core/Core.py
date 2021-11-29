@@ -43,6 +43,10 @@ DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 
 class Core(Thread):
     def __init__(self):
+        """!
+        Esta clase sirve como compositor e iniciador de cada sensor, inicia y
+        decara los componestes que se usará para el embebido.
+        """
         Thread.__init__(self)
         self.shutdown_flag = Event()
         self.bd = BlueDot()
@@ -67,6 +71,9 @@ class Core(Thread):
 
 
     def telebot_msg_handler(self):
+        """!
+        Este método es el encargado de enviar y recibir mensajes del bot de telegram
+        """
         bot = self.tele_bot
 
         @bot.message_handler(commands=['abrir'])
@@ -93,6 +100,9 @@ class Core(Thread):
         bot.infinity_polling()
 
     def run(self):
+        """!
+        Aquí se llaman y se ejecuta en cada hilo los procesos de cada sensor
+        """
         self.led_gen_status.blink(on_time=1, off_time=5)
         self.mod_gas.start()
         print("\033[32mIniciando Modulo de Bluetooth\033[0m")
@@ -109,18 +119,30 @@ class Core(Thread):
 
 
     def abrir_cerradura(self):
+        """!
+        Abre la cerradura
+        """
         self.servo_motor.max()
 
     def cerrar_cerradura(self):
+        """!
+        Cierra la cerradura
+        """
         self.servo_motor.min()
 
     def cambiar_edo(self):
+        """!
+        Cierra o abre la serradura segun su estado actual
+        """
         if self.servo_motor.value == -1.0:
             self.abrir_cerradura()
         else:
             self.cerrar_cerradura()
 
     def cerradura(self):
+        """!
+        Escucha del interruptor para cambiar el estado de la cerradura
+        """
         while True:
             if self.interruptor_plastico.is_pressed:
                 print("Cambia")

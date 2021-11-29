@@ -1,0 +1,12 @@
+google-assistant-grpc==0.2.1
+google-assistant-library==1.1.0
+google-assistant-sdk==0.6.0
+google-auth==1.0.1
+google-auth-oauthlib==0.4.6
+googleapis-common-protos==1.53.0
+gpiozero==1.6.2
+grpcio==1.42.0
+bluedot==2.0.0
+pyfingerprint==1.5
+pyTelegramBotAPI==3.7.9
+requests==2.25.1

@@ -4,11 +4,17 @@ import signal
 from core.Core import Core
 
 def service_shutdown(signum, frame):
+    """
+    Intento de ontrolar señales
+    """
     print('Deteniendo el proceso (%d)' % signum)
     raise Exception()
 
 
 def main():
+    """
+    Función principal que inicia el programa
+    """
     signal.signal(signal.SIGTERM, service_shutdown)
     signal.signal(signal.SIGINT, service_shutdown)
     try:
