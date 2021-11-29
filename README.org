@@ -15,3 +15,9 @@
 - [X] BD para usuarios
   - [X] Esquema básico
 - [ ] Inicio Automático en el SO de la Raspberry
+* Ejecución
+Se ejecuta con python 3 apuntando al archivo [[./src/main.py][./src/main.py]]
+- Ejemplo
+  #+begin_src shell
+$ python3 ./src/main.py
+  #+end_src
